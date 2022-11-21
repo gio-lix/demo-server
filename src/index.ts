@@ -7,6 +7,7 @@ import {createServer} from "http"
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
+import routes from './routes/index'
 
 import './config/dataBase'
 
@@ -33,9 +34,7 @@ io.on("connection",(socket: Socket) => {
 
 
 
-app.get('/', (req: Request, res: Response) => {
-    res.json({msg: "hello"})
-});
+app.use('/api', routes)
 
 
 
