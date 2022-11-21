@@ -6,7 +6,6 @@ import {Server, Socket} from "socket.io"
 import {createServer} from "http"
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import morgan from 'morgan'
 
 import './config/dataBase'
 
@@ -17,7 +16,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(morgan('dev'))
+
 app.use(cookieParser())
 
 const http = createServer(app)
