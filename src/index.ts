@@ -5,11 +5,12 @@ import express, {Express, Request, Response} from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
+import {createServer} from "http"
+import {Server, Socket} from "socket.io"
 
 import './config/dataBase'
 
 const app: Express = express();
-const port = process.env.PORT || 5005;
 
 app.use(cors())
 app.use(express.json())
@@ -17,10 +18,25 @@ app.use(express.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.use(cookieParser())
 
+
+const http = createServer(app)
+export const io = new Server(http)
+import {SocketServer} from "./config/socket";
+
+
+io.on("connection",(socket: Socket) => {
+    SocketServer(socket)
+})
+
+
+
 app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server');
 });
 
-app.listen(port, () => {
+
+const port = process.env.PORT || 5005;
+
+http.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
