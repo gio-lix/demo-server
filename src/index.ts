@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import {createServer} from "http"
 import {Server, Socket} from "socket.io"
+import routes from './routes/index'
 
 import './config/dataBase'
 
@@ -29,10 +30,7 @@ io.on("connection",(socket: Socket) => {
 })
 
 
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
-});
+app.use('/api', routes)
 
 
 const port = process.env.PORT || 5005;
