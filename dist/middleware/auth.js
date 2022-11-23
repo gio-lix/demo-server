@@ -16,11 +16,12 @@ const userModule_1 = __importDefault(require("../moduls/userModule"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = req.header("Authorization");
+        const token = req.headers.authorization;
         if (!token) {
             return res.status(400).json({ msg: "Invalid Authorization" });
         }
-        const decoded = jsonwebtoken_1.default.verify(token, `${process.env.ACCESS_TOKEN_SECRET}`);
+        const accessToken = token.split(" ")[1];
+        const decoded = jsonwebtoken_1.default.verify(accessToken, `${process.env.ACCESS_TOKEN_SECRET}`);
         if (!decoded) {
             return res.status(400).json({ msg: "Invalid Authorization" });
         }

@@ -5,11 +5,14 @@ import {IDecodedToken, IReqAuth} from "../config/interface";
 
 const auth = async (req: IReqAuth, res:Response, next:NextFunction) => {
     try {
-        const token = req.header("Authorization")
+        const token = req.headers.authorization
         if (!token) {
             return res.status(400).json({msg: "Invalid Authorization"})
         }
-        const decoded = <IDecodedToken>jwt.verify(token, `${process.env.ACCESS_TOKEN_SECRET}`)
+        const accessToken = token.split(" ")[1]
+
+
+        const decoded = <IDecodedToken>jwt.verify(accessToken, `${process.env.ACCESS_TOKEN_SECRET}`)
         if (!decoded) {
             return res.status(400).json({msg: "Invalid Authorization"})
         }

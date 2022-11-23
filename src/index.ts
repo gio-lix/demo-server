@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import express, {Request, Response} from 'express'
+import express from 'express'
 import {Server, Socket} from "socket.io"
 import {createServer} from "http"
 import cors from 'cors'
@@ -14,12 +14,20 @@ import './config/dataBase'
 
 const app = express()
 
+const endpoints = [
+    'http://localhost:3000',
+    'https://aaaapppp12-app.onrender.com',
+];
 
-app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.use(cookieParser())
+
+app.use(cors({
+    credentials: true,
+    origin: endpoints
+}))
 
 const http = createServer(app)
 export const io = new Server(http)
@@ -36,7 +44,8 @@ app.use('/api', routes)
 
 
 
-const PORT = process.env.PORT || 5555
+// const PORT = process.env.PORT || 5000
+const PORT = 5000
 http.listen(PORT, () => {
     console.log('Server is running on port', PORT)
 })

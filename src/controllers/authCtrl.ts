@@ -53,7 +53,7 @@ const authCtrl = {
     logout: async (req: IReqAuth, res: Response) => {
         if  (!req.user) return res.status(400).json({msg: "Invalid Authentication."})
         try {
-            res.clearCookie("refreshtoken", {path: `/api/refresh_token`})
+            res.clearCookie("refresh_token")
             await Users.findOneAndUpdate(
                 {_id: req.user._id},
                 {rf_token: ""})

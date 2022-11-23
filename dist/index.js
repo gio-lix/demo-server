@@ -15,11 +15,18 @@ const morgan_1 = __importDefault(require("morgan"));
 const index_1 = __importDefault(require("./routes/index"));
 require("./config/dataBase");
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+const endpoints = [
+    'http://localhost:3000',
+    'https://aaaapppp12-app.onrender.com',
+];
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, morgan_1.default)('dev'));
 app.use((0, cookie_parser_1.default)());
+app.use((0, cors_1.default)({
+    credentials: true,
+    origin: endpoints
+}));
 const http = (0, http_1.createServer)(app);
 exports.io = new socket_io_1.Server(http);
 const socket_1 = require("./config/socket");
@@ -27,7 +34,8 @@ exports.io.on("connection", (socket) => {
     (0, socket_1.SocketServer)(socket);
 });
 app.use('/api', index_1.default);
-const PORT = process.env.PORT || 5555;
+// const PORT = process.env.PORT || 5000
+const PORT = 5000;
 http.listen(PORT, () => {
     console.log('Server is running on port', PORT);
 });
