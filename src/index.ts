@@ -14,7 +14,11 @@ import './config/dataBase'
 
 const app = express()
 
-
+const endpoints = [
+    "http://localhost:3000",
+    "https://chat-2-nine.vercel.app",
+    "https://aaaapppp12-app.onrender.com",
+];
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -23,7 +27,7 @@ app.use(cookieParser())
 
 app.use(cors({
     credentials: true,
-    origin: "https://aaaapppp12-app.onrender.com"
+    origin: endpoints
 }))
 
 const http = createServer(app)
