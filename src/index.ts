@@ -14,10 +14,7 @@ import './config/dataBase'
 
 const app = express()
 
-const endpoints = [
-    'http://localhost:3000',
-    'https://aaaapppp12-app.onrender.com',
-];
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -26,7 +23,7 @@ app.use(cookieParser())
 
 app.use(cors({
     credentials: true,
-    origin: endpoints
+    origin: "*"
 }))
 
 const http = createServer(app)
