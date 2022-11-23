@@ -23,7 +23,7 @@ app.use(cookieParser())
 
 app.use(cors({
     credentials: true,
-    origin: "*"
+    origin: "https://aaaapppp12-app.onrender.com"
 }))
 
 const http = createServer(app)
